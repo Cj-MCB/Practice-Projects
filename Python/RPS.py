@@ -1,5 +1,11 @@
 import random, time
+import os
 
+#Temporary to find issues with recursion
+#import sys
+#sys.setrecursionlimit(10)
+
+os.system('cls')
 print("Welcome to Rock Paper Scissors!")
 
 
@@ -12,22 +18,25 @@ def askplay():
     playchecker(play)
 
 def game():
-    global computerpoints
-    computerpoints = 0
-    global playerpoints
-    playerpoints = 0
+    # global computerpoints
+    # computerpoints = 0
+    # global playerpoints
+    # playerpoints = 0
 
     def rpsshoot():
-        wait = time.sleep(1)
+        os.system('cls')
         print("Rock..")
-        wait
+        time.sleep(1)
+        os.system('cls')
         print("Paper..")
-        wait
+        time.sleep(1)
+        os.system('cls')
         print("Scissors..")
-        wait
+        time.sleep(1)
+        os.system('cls')
         print("Shoot!")
-
-    print("This is going to be a 2 out of 3 game, so be prepared!")
+        time.sleep(1)
+        os.system('cls')
 
     def askchoice():
         choose = input("Pick rock, paper, or scissors.\n").lower()
@@ -41,67 +50,74 @@ def game():
 
     def detrandomchoice():
         intrandomchoice = random.randint(1, 3)
-        #print(f"Random choice: {intrandomchoice}")
         # 1 = R, 2 = P, 3 = S
         return intrandomchoice
 
     def tiechecker(choice):
-        #print("Running tie-checker")
         randomchoice = detrandomchoice()
         if choice == randomchoice:
-            #print(f"Duplicate detected, your choice: {choice}, computer's choice: {randomchoice}")
             tiechecker(choice)
         elif choice != randomchoice:
-            #print(f"Your choice: {choice}, Computer's choice: {randomchoice}")
             return randomchoice
 
     choice = askchoice()
     randomchoice = tiechecker(choice)
 
-    def endgamechecker(computerpoints, playerpoints):
-        if computerpoints >= 2:
-            ...
-        elif playerpoints >=2:
-            ...
-        else:
-            # Add round numbers later
-            print("Here comes the next round!")
-            askchoice()
-
-    def resultchecker(computerpoints, playerpoints):
+    def resultchecker():
+        rpsshoot()
         if choice == 1: #Rock
             if randomchoice == 2: #Paper
-                computerpoints += 1
-                print(f"Paper beats rock, Computer wins!\nComputer: {computerpoints}\nPlayer: {playerpoints}")
+                print(f"Computer chose paper")
+                print(f"Paper beats rock, Computer wins!")
             elif randomchoice == 3: #Scissors
-                playerpoints += 1
-                print(f"Rock beats scissors, Player wins!\nComputer: {computerpoints}\nPlayer: {playerpoints}")
+                print(f"Computer chose scissors")
+                print(f"Rock beats scissors, Player wins!")
         elif choice == 2: #Paper
             if randomchoice == 1: #Rock
-                playerpoints += 1
-                print(f"Paper beats rock, Player wins!\nComputer: {computerpoints}\nPlayer: {playerpoints}")
+                print("Computer chose rock")
+                print(f"Paper beats rock, Player wins!")
             elif randomchoice == 3: #Scissors
-                computerpoints += 1
-                print(f"Scissors beats paper, Computer wins!\nComputer: {computerpoints}\nPlayer: {playerpoints}")
+                print("Computer chose scissors")
+                print(f"Scissors beats paper, Computer wins!")
         elif choice == 3: #Scissors
             if randomchoice == 1: #Rock
-                computerpoints += 1
-                print(f"Rock beats scissors, Computer wins!\nComputer: {computerpoints}\nPlayer: {playerpoints}")
+                print("Computer chose rock")
+                print(f"Rock beats scissors, Computer wins!")
             elif randomchoice == 2: #Paper
-                playerpoints += 1
-                print(f"Scissors beats paper, Player wins!\nComputer: {computerpoints}\nPlayer: {playerpoints}")
-        endgamechecker(computerpoints, playerpoints)
+                print("Computer chose paper")
+                print(f"Scissors beats paper, Player wins!")
 
-    resultchecker(computerpoints, playerpoints)
-    
+    resultchecker()
+
+def asknoplay():
+    askrules = input("Would you like to see the rules or quit? (Rules/Quit)\n").lower()
+    noplay(askrules)
+
+def noplay(askrules):
+    if askrules == "rules" or askrules == "r":
+        print("If you don't understand the rules of rock paper scissors, I'm very sorry for you.\nHowever, I'm too lazy to type out the rules for a practice project.")
+        time.sleep(1.5)
+        ready = input("Type anything when you are ready to begin!\n")
+        if ready == "anything":
+            print("Ok smart guy, let's get this game started.")
+            time.sleep(3)
+        os.system('cls')
+        game()
+    elif askrules == "quit" or askrules == "q":
+        print("See you next time!")
+        quit()
+    else:
+        print("That wasn't an option!")
+        asknoplay()
+
 def playchecker(play):
     if play == "yes" or play == "y":
         game()
     elif play == "no" or play == "n":
-        ...
+        asknoplay()
     else:
         print(f"That was not an option!")
         askplay()
-
 askplay()
-# Add results, etc.
+
+#I am aware there's no way to play again, I got this far and just wanted to move on to the next project.
